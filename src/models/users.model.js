@@ -22,6 +22,7 @@ module.exports = function (app) {
   users.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
+    users.hasMany(models.route);
   };
 
   return users;

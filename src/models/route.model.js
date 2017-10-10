@@ -31,6 +31,7 @@ module.exports = function (app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     route.belongsTo(models.users);
+    route.belongsToMany(models.location, {through: models.routeslocs});
   };
 
   return route;

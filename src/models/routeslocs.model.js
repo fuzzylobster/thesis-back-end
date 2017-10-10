@@ -5,20 +5,10 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const location = sequelizeClient.define('location', {
-    long: {
-      type: DataTypes.TEXT,
-    },
-    lat: {
-      type: DataTypes.TEXT,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'createdat'
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: 'updatedat'
+  const routeslocs = sequelizeClient.define('routeslocs', {
+    text: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     hooks: {
@@ -28,11 +18,10 @@ module.exports = function (app) {
     }
   });
 
-  location.associate = function (models) { // eslint-disable-line no-unused-vars
+  routeslocs.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    location.belongsToMany(models.route, { through: models.routeslocs });
   };
 
-  return location;
+  return routeslocs;
 };

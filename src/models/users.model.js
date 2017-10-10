@@ -9,6 +9,7 @@ module.exports = function (app) {
   
   
     googleId: { type: Sequelize.STRING },
+    badgecount: {type: DataTypes.INTEGER}
   
   }, {
     hooks: {

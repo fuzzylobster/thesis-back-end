@@ -6,9 +6,17 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const route = sequelizeClient.define('route', {
-    text: {
-      type: DataTypes.STRING,
+    createdby: {
+      type: DataTypes.INTEGER,
       allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'createdat'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updatedat'
     }
   }, {
     hooks: {

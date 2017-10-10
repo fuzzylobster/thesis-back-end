@@ -6,9 +6,10 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const route = sequelizeClient.define('route', {
-    createdby: {
+    userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      field: 'createdby'
     },
     createdAt: {
       type: DataTypes.DATE,

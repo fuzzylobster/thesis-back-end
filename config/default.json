@@ -25,8 +25,8 @@
       "expiresIn": "1d"
     },
     "google": {
-      "clientID": "id",
-      "clientSecret": "password",
+      "clientID": "client id",
+      "clientSecret": "client secret",
       "successRedirect": "/",
       "scope": [
         "profile openid email"

@@ -23,6 +23,13 @@ module.exports = function () {
     before: {
       create: [
         authentication.hooks.authenticate(config.strategies)
+        // hook => {
+        //   hook.params.payload = {
+        //     userId: hook.params.user.id,
+        //     googleId: hook.params.user.googleId
+        //   };
+        //   console.log(jwt);
+        // }
       ],
       remove: [
         authentication.hooks.authenticate('jwt')

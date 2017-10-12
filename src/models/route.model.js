@@ -10,14 +10,6 @@ module.exports = function (app) {
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'createdby'
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'createdat'
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: 'updatedat'
     }
   }, {
     hooks: {

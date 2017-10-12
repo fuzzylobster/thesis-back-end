@@ -24,7 +24,7 @@
   "scripts": {
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
-    "start": "node src/",
+    "start": "nodemon src/",
     "mocha": "mocha test/ --recursive"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "feathers-authentication-client": "^0.3.3",
     "feathers-authentication-hooks": "^0.1.4",
     "feathers-authentication-jwt": "^0.3.2",
+    "feathers-authentication-local": "^0.4.4",
     "feathers-authentication-oauth2": "^0.3.1",
     "feathers-configuration": "^0.4.1",
     "feathers-errors": "^2.9.2",

@@ -22,14 +22,14 @@ module.exports = function () {
   app.service('authentication').hooks({
     before: {
       create: [
-        authentication.hooks.authenticate(config.strategies)
-        // hook => {
-        //   hook.params.payload = {
-        //     userId: hook.params.user.id,
-        //     googleId: hook.params.user.googleId
-        //   };
-        //   console.log(jwt);
-        // }
+        authentication.hooks.authenticate(config.strategies),
+        hook => {
+          hook.params.payload = {
+            userId: hook.params.user.id,
+            googleId: hook.params.user.googleId
+          };
+          console.log(jwt);
+        }
       ],
       remove: [
         authentication.hooks.authenticate('jwt')

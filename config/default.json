@@ -8,7 +8,7 @@
   },
   "postgres": "postgres://postgres:@localhost:5432/thesis",
   "authentication": {
-    "secret": "secret",
+    "secret": "",
     "strategies": [
       "jwt"
     ],
@@ -25,8 +25,8 @@
       "expiresIn": "1d"
     },
     "google": {
-      "clientID": "client id",
-      "clientSecret": "client secret",
+      "clientID": "",
+      "clientSecret": "",
       "successRedirect": "/",
       "scope": [
         "profile openid email"

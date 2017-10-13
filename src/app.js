@@ -21,6 +21,8 @@ const appHooks = require('./app.hooks');
 
 const sequelize = require('./sequelize');
 
+const authentication = require('./authentication');
+
 const app = feathers();
 
 // Load app configuration
@@ -45,6 +47,10 @@ app.configure(middleware);
 
 // Set up our services (see `services/index.js`)
 app.configure(services);
+
+// Configure auth
+app.configure(authentication);
+
 // Configure a middleware for 404s and the error handler
 app.use(notFound());
 app.use(handler());

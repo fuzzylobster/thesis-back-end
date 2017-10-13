@@ -17,7 +17,15 @@ module.exports = function () {
   // to create a new valid JWT (e.g. local or oauth2)
   app.service('authentication').hooks({
     before: {
+      all: [],
       create: [
+        hook => {
+          if (hook.data.authType === 'google') {
+            console.log('it\'s google', hook.data.token);
+          } if (hook.data.authType === 'facebook') {
+            console.log('it\s facebook', hook.data.token);
+          }
+        },
         authentication.hooks.authenticate(config.strategies)
       ],
       remove: [

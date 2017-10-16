@@ -51,10 +51,16 @@ app.configure(services);
 // Configure auth
 app.configure(authentication);
 
-// Configure a middleware for 404s and the error handler
+// Configure a middleware for 04s and the error handler
 app.use(notFound());
 app.use(handler());
 
 app.hooks(appHooks);
+
+// Testing auth
+app.on('login', (req, res) => {
+  console.log('request', req);
+  console.log('response', res);
+});
 
 module.exports = app;

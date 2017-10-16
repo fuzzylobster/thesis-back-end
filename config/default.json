@@ -22,6 +22,5 @@
       "usernameField": "email",
       "passwordField": "password"
     }
-  },
-  "postgres": "postgres://postgres:@localhost:5432/thesis"
+  }
 }

@@ -6,16 +6,20 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const users = sequelizeClient.define('users', {
-  
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+  googleId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  }
+    // email: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   unique: true
+    // },
+    // password: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
   
   
   }, {

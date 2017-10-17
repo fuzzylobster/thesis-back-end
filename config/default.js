@@ -9,7 +9,7 @@ module.exports = {
   },
   'postgres': process.env.CONNECTION,
   'authentication': {
-    'secret': '',
+    'secret': process.env.AUTH_SECRET,
     'strategies': [
       'jwt',
       'local'

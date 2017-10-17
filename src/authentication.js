@@ -29,7 +29,7 @@ module.exports = function () {
           console.log(hook.data);
           // If coming from google
           if (hook.data.authType === 'google') {
-            console.log('it\'s google', hook.data.token);
+            console.log('it\'s google');
             // Verify
             client.verifyIdToken(
               hook.data.token,
@@ -52,10 +52,11 @@ module.exports = function () {
                     };
                     hook.params.authenticated = true;
                     // Create the JWT
-                    app.passport.createJWT(hook.params.payload).then(() => {
-                      console.log('JWT success!');
-                    }).catch(() => {
-                      console.log('JWT creation failed');
+                    app.passport.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
+                      console.log('JWT success!', jwt);
+                      return jwt;
+                    }).catch((error) => {
+                      console.log('JWT creation failed', error);
                     });
                   } // If verify fails 
                   else if (!payload.aud) {
@@ -79,5 +80,10 @@ module.exports = function () {
         authentication.hooks.authenticate('jwt')
       ]
     }
+    // after: {
+    //   create: [hook => {
+    //     console.log('AFTER HOOK', hook.params)
+    //   }]
+    // }
   });
 };

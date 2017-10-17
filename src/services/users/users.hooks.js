@@ -3,6 +3,7 @@ const { authenticate } = require('feathers-authentication').hooks;
 const commonHooks = require('feathers-hooks-common');
 const { restrictToOwner } = require('feathers-authentication-hooks');
 
+const authUtils = require('feathers-authentication/lib/utils');
 const GoogleAuth = require('google-auth-library');
 
 const { hashPassword } = require('feathers-authentication-local').hooks;
@@ -44,18 +45,18 @@ module.exports = {
                 // If verify success
                 if (payload.aud) {
                   console.log('success! payload:', payload, 'userid:', userid);
-                  // // Include user id in custom JWT
-                  // hook.params.payload = {
-                  //   userID: userid
-                  // };
-                  // hook.params.authenticated = true;
-                  // // Create the JWT
-                  // app.passport.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
-                  //   console.log('JWT success!', jwt);
-                  //   return jwt;
-                  // }).catch((error) => {
-                  //   console.log('JWT creation failed', error);
-                  // });
+                  // Include user id in custom JWT
+                  hook.params.payload = {
+                    userID: userid
+                  };
+                  hook.params.authenticated = true;
+                  // Create the JWT
+                  authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
+                    console.log('JWT success!', jwt);
+                    return jwt;
+                  }).catch((error) => {
+                    console.log('JWT creation failed', error);
+                  });
                   hook.data.googleId = userid;
                   console.log(hook.data);
                 } // If verify fails 

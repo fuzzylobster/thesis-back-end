@@ -16,6 +16,38 @@ const feathers = require('feathers');
 const app = feathers();
 const rest = require('feathers-rest');
 
+const verifyIdToken = hook => new Promise((resolve, reject) =>
+  client.verifyIdToken(hook.data.token, process.env.CLIENT_ID, (e, login) => {
+    if (e) {
+      reject(e);
+    } else {
+      resolve(login);
+    }
+  }));
+const verifier = async (hook) => {
+  try {
+    const login = await verifyIdToken(hook);
+    // Get payload and user id
+    var payload = login.getPayload();
+    var userID = payload['sub'];
+    // If verify success
+    if (payload.aud === process.env.CLIENT_ID) {
+      console.log('success! payload:', payload, 'userid:', userID);
+      // Include user id in custom JWT
+      hook.params.payload = { userID };
+      hook.params.authenticated = true;
+      const jwt = await authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET });
+      hook.data.jwtToken = jwt;
+      hook.data.googleId = userID;
+    }
+    console.log(login, 'this is login');
+    return login;
+  } catch (err) {
+    console.log(err, 'Verification Error')
+    return err;
+  }
+}
+
 
 module.exports = {
   before: {

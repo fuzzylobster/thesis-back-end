@@ -57,10 +57,4 @@ app.use(handler());
 
 app.hooks(appHooks);
 
-// Testing auth
-app.on('login', (req, res) => {
-  console.log('request', req);
-  console.log('response', res);
-});
-
 module.exports = app;

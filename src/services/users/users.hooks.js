@@ -51,6 +51,7 @@ module.exports = {
             hook.data.token,
             process.env.CLIENT_ID,
             function (e, login) {
+              console.log(login);
               // If verify fails
               if (!login) {
                 console.error('Login Failed');
@@ -60,7 +61,7 @@ module.exports = {
                 var payload = login.getPayload();
                 var userid = payload['sub'];
                 // If verify success
-                if (payload.aud) {
+                if (payload.aud === process.env.CLIENT_ID) {
                   console.log('success! payload:', payload, 'userid:', userid);
                   // Include user id in custom JWT
                   hook.params.payload = {
@@ -69,32 +70,19 @@ module.exports = {
                   hook.params.authenticated = true;
                   // Create the JWT
                   // async
-                  const generateJWT = async () => {
                     authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
                     console.log('JWT success!', jwt);
                     // Send the JWT
                     return jwt;
-                    // app.configure(rest((req, res) => {
-                    //   res.format({
-                    //     'text/plain': function () {
-                    //       res.end(jwt);
-                    //     }
-                    //   });
-                    // }));
                   }).catch((error) => {
                     console.log('JWT creation failed', error);
-                  });
-                };            
+                  });            
                 //await
-                  const sendData = async () => {
-                    hook.data.jwtToken = await generateJWT();
+                    let jwt;
+                    hook.data.jwtToken = jwt;
                     hook.data.googleId = userid;
-                    console.log('inside async', hook.data);
-                  }
-                  sendData();
-                  console.log('outside async', hook.data);
                 } // If verify fails 
-                else if (!payload.aud) {
+                else if (payload.aud !== process.env.CLIENT_ID) {
                   console.error('Login failed');
                 }
               }

@@ -48,8 +48,8 @@ app.configure(middleware);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 
-// Configure auth
-app.configure(authentication);
+// // Configure auth
+// app.configure(authentication);
 
 // Configure a middleware for 04s and the error handler
 app.use(notFound());

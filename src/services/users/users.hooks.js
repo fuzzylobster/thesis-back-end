@@ -5,27 +5,44 @@ const { restrictToOwner } = require('feathers-authentication-hooks');
 
 const authUtils = require('feathers-authentication/lib/utils');
 const GoogleAuth = require('google-auth-library');
+const Promise = require('bluebird');
 
 const { hashPassword } = require('feathers-authentication-local').hooks;
-const restrict = [
-  authenticate('jwt'),
-  restrictToOwner({
-    idField: 'id',
-    ownerField: 'id'
-  })
-];
 
 const auth = new GoogleAuth;
 const client = new auth.OAuth2(process.env.CLIENT_ID, '', '');
+
+const feathers = require('feathers');
+const app = feathers();
+const rest = require('feathers-rest');
 
 
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt') ],
-    get: [ ...restrict ],
-    create: [ 
-      // hashPassword()
+    find: [],
+    get: [],
+    create: [
+      // hook => {
+      //   const verifyGoogle = client.verifyIdToken;
+      //   Promise.promisify(verifyGoogle, hook.data.token, process.env.CLIENT_ID).then((e, login) => {
+      //     if (!login) {
+      //       console.error('Login Failed');
+      //     } else {
+      //       var payload = login.getPayload();
+      //       var userid = payload['sub'];
+      //       if (payload.aud) {
+      //         hook.params.payload = {
+      //           userID: userid
+      //         };
+      //         hook.params.authenticated = true;
+      //         hook.data.googleId = userId;
+      //       }
+      //     }
+      //   }).then(authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET })).then(jwt => {
+      //     hook.data.jwtToken = jwt;
+      //   });
+      // } 
       hook => {
         console.log(hook.data);
         if (hook.data.authType === 'google') {
@@ -51,35 +68,47 @@ module.exports = {
                   };
                   hook.params.authenticated = true;
                   // Create the JWT
-                  authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
+                  // async
+                  const generateJWT = async () => {
+                    authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
                     console.log('JWT success!', jwt);
+                    // Send the JWT
                     return jwt;
+                    // app.configure(rest((req, res) => {
+                    //   res.format({
+                    //     'text/plain': function () {
+                    //       res.end(jwt);
+                    //     }
+                    //   });
+                    // }));
                   }).catch((error) => {
                     console.log('JWT creation failed', error);
                   });
-                  hook.data.googleId = userid;
-                  console.log(hook.data);
+                };            
+                //await
+                  const sendData = async () => {
+                    hook.data.jwtToken = await generateJWT();
+                    hook.data.googleId = userid;
+                    console.log('inside async', hook.data);
+                  }
+                  sendData();
+                  console.log('outside async', hook.data);
                 } // If verify fails 
                 else if (!payload.aud) {
-                  console.error('login failed');
+                  console.error('Login failed');
                 }
               }
             });
         }
       }
     ],
-    update: [ ...restrict, hashPassword() ],
-    patch: [ ...restrict, hashPassword() ],
-    remove: [ ...restrict ]
+    update: [],
+    patch: [],
+    remove: []
   },
 
   after: {
-    all: [
-      commonHooks.when(
-        hook => hook.params.provider,
-        commonHooks.discard('password')
-      )
-    ],
+    all: [],
     find: [],
     get: [],
     create: [],

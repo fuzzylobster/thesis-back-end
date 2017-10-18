@@ -39,7 +39,7 @@ const verifier = async (hook) => {
       hook.data.googleId = userID;
     }
     console.log(login, 'this is login');
-    return hook.data;
+    return hook;
   } catch (err) {
     console.log(err, 'Verification Error');
     return err;
@@ -52,31 +52,64 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [
+    create: [ 
       // hook => {
-      //   const verifyGoogle = client.verifyIdToken;
-      //   Promise.promisify(verifyGoogle, hook.data.token, process.env.CLIENT_ID).then((e, login) => {
-      //     if (!login) {
-      //       console.error('Login Failed');
-      //     } else {
-      //       var payload = login.getPayload();
-      //       var userid = payload['sub'];
-      //       if (payload.aud) {
-      //         hook.params.payload = {
-      //           userID: userid
-      //         };
-      //         hook.params.authenticated = true;
-      //         hook.data.googleId = userId;
-      //       }
-      //     }
-      //   }).then(authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET })).then(jwt => {
-      //     hook.data.jwtToken = jwt;
-      //   });
-      // } 
-      hook => {
+      //   console.log(hook.data);
+      //   if (hook.data.authType === 'google') {
+      //     console.log('It\'s Google');
+      //     return async client.verifyIdToken(
+      //       hook.data.token,
+      //       process.env.CLIENT_ID,
+      //       function (e, login) {
+      //         console.log(login);
+      //         // If verify fails
+      //         if (!login) {
+      //           console.error('Login Failed');
+      //         } // If verify success 
+      //         else if (login) {
+      //           // Get payload and user id
+      //           var payload = login.getPayload();
+      //           var userid = payload['sub'];
+      //           // If verify success
+      //           if (payload.aud === process.env.CLIENT_ID) {
+      //             console.log('success! payload:', payload, 'userid:', userid);
+      //             // Include user id in custom JWT
+      //             hook.params.payload = {
+      //               userID: userid
+      //             };
+      //             hook.params.authenticated = true;
+      //             // Create the JWT
+      //             // async
+      //             let jwt = await authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
+      //               console.log('JWT success!', jwt);
+                    
+      //               // Send the JWT
+      //               return jwt;
+      //               // app.configure(rest((req, res) => {
+      //               //   res.format({
+      //               //     'text/plain': function () {
+      //               //       res.end(jwt);
+      //               //     }
+      //               //   });
+      //               // }));
+      //             }).catch((error) => {
+      //               console.log('JWT creation failed', error);
+      //             });
+      //             //await
+      //             hook.data.jwtToken = jwt;
+      //             hook.data.googleId = userid;
+      //           } // If verify fails 
+      //           else if (payload.aud !== process.env.CLIENT_ID) {
+      //             console.error('Login failed');
+      //           }
+      //         }
+      //       });
+      //   }
+      // }
+      async hook => {
         console.log(hook.data);
         if (hook.data.authType === 'google') {
-          verifier(hook)
+          var verify = await verifier(hook)
             .then(data => {
               console.log(data)
               return data;
@@ -85,48 +118,8 @@ module.exports = {
               console.error(err);
               return err;
             });
-          // console.log('It\'s Google');
-          // client.verifyIdToken(
-          //   hook.data.token,
-          //   process.env.CLIENT_ID,
-          //   function (e, login) {
-          //     console.log(login);
-          //     // If verify fails
-          //     if (!login) {
-          //       console.error('Login Failed');
-          //     } // If verify success 
-          //     else if (login) {
-          //       // Get payload and user id
-          //       var payload = login.getPayload();
-          //       var userid = payload['sub'];
-          //       // If verify success
-          //       if (payload.aud === process.env.CLIENT_ID) {
-          //         console.log('success! payload:', payload, 'userid:', userid);
-          //         // Include user id in custom JWT
-          //         hook.params.payload = {
-          //           userID: userid
-          //         };
-          //         hook.params.authenticated = true;
-          //         // Create the JWT
-          //         // async
-          //           authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
-          //           console.log('JWT success!', jwt);
-          //           // Send the JWT
-          //           return jwt;
-          //         }).catch((error) => {
-          //           console.log('JWT creation failed', error);
-          //         });            
-          //       //await
-          //           let jwt;
-          //           hook.data.jwtToken = jwt;
-          //           hook.data.googleId = userid;
-          //       } // If verify fails 
-          //       else if (payload.aud !== process.env.CLIENT_ID) {
-          //         console.error('Login failed');
-          //       }
-          //     }
-          //   });
         }
+        return verify;
       }
     ],
     update: [],

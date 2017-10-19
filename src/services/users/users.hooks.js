@@ -106,20 +106,12 @@ module.exports = {
       //       });
       //   }
       // }
-      async hook => {
+      hook => {
         console.log(hook.data);
         if (hook.data.authType === 'google') {
-          var verify = await verifier(hook)
-            .then(data => {
-              console.log(data)
-              return data;
-            })
-            .catch(err => {
-              console.error(err);
-              return err;
-            });
+          return verifier(hook)
         }
-        return verify;
+        return hook;
       }
     ],
     update: [],

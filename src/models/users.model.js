@@ -10,6 +10,13 @@ module.exports = function (app) {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
+  },
+  jwtToken: {
+    type: DataTypes.STRING
+  },
+  badges: {
+    type: DataTypes.ARRAY(DataTypes.TEXT),
+    defaultValue: []
   }
     // email: {
     //   type: DataTypes.STRING,

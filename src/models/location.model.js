@@ -6,11 +6,12 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const location = sequelizeClient.define('location', {
-    long: {
-      type: DataTypes.TEXT,
+    name: {
+      type: DataTypes.TEXT
     },
-    lat: {
-      type: DataTypes.TEXT,
+    coords: {
+      type: DataTypes.JSON,
+      defaultValue: {}
     }
   }, {
     hooks: {

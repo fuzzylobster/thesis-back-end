@@ -10,6 +10,9 @@ module.exports = function (app) {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
+  },
+  jwtToken: {
+    type: DataTypes.STRING
   }
     // email: {
     //   type: DataTypes.STRING,

@@ -18,12 +18,12 @@ const feathers = require('feathers');
 const app = feathers();
 const rest = require('feathers-rest');
 
-
 const verifyIdToken = hook => new Promise((resolve, reject) =>
   client.verifyIdToken(hook.data.token, CLIENT_ID, (e, login) => e ? reject(e) : resolve(login)));
 
 const verifier = async (hook) => {
   try {
+    console.log('THIS IS HOOK DATA', hook.data);
     const login = await verifyIdToken(hook);
     // Get payload and user id
     var { aud, sub: userID } = login.getPayload();
@@ -32,13 +32,14 @@ const verifier = async (hook) => {
     if (aud === CLIENT_ID) {
       console.log('success! Aud:', aud, 'userid:', userID);
       // Include user id in custom JWT
-      hook.params.payload = { userID };
+      hook.params.payload = {
+        userID
+      };
       hook.params.authenticated = true;
       const jwt = await authUtils.createJWT(hook.params.payload, { secret: AUTH_SECRET });
       hook.data.jwtToken = jwt;
       hook.data.googleId = userID;
     }
-    console.log(login, 'this is login');
     return hook;
   } catch (err) {
     console.log(err, 'Verification Error');
@@ -51,8 +52,8 @@ module.exports = {
   before: {
     all: [],
     find: [],
-    get: [],
-    create: [ 
+    get: [authenticate('jwt')],
+    create: [
       // hook => {
       //   console.log(hook.data);
       //   if (hook.data.authType === 'google') {
@@ -82,7 +83,7 @@ module.exports = {
       //             // async
       //             let jwt = await authUtils.createJWT(hook.params.payload, { secret: process.env.AUTH_SECRET }).then((jwt) => {
       //               console.log('JWT success!', jwt);
-                    
+
       //               // Send the JWT
       //               return jwt;
       //               // app.configure(rest((req, res) => {
@@ -106,12 +107,20 @@ module.exports = {
       //       });
       //   }
       // }
-      hook => {
-        console.log(hook.data);
+      async hook => {
+        console.log(hook);
         if (hook.data.authType === 'google') {
-          return verifier(hook)
+          var verify = await verifier(hook)
+            .then(data => {
+              console.log(data)
+              return data;
+            })
+            .catch(err => {
+              console.error(err);
+              return err;
+            });
         }
-        return hook;
+        return verify;
       }
     ],
     update: [],

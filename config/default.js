@@ -11,8 +11,7 @@ module.exports = {
   'authentication': {
     'secret': process.env.AUTH_SECRET,
     'strategies': [
-      'jwt',
-      'local'
+      'jwt'
     ],
     'path': '/authentication',
     'service': 'users',

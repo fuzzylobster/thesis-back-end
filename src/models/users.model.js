@@ -6,10 +6,21 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const users = sequelizeClient.define('users', {
-    // googleId: { type: Sequelize.STRING },
-    email: { type: DataTypes.STRING },
-    password: { type: DataTypes.STRING },
-    badgecount: { type: DataTypes.INTEGER, defaultValue: 0 }
+  googleId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  }
+    // email: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   unique: true
+    // },
+    // password: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
+  
   
   }, {
     hooks: {
@@ -22,7 +33,6 @@ module.exports = function (app) {
   users.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    users.hasMany(models.route);
   };
 
   return users;

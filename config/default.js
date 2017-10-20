@@ -9,9 +9,10 @@ module.exports = {
   },
   'postgres': process.env.CONNECTION,
   'authentication': {
-    'secret': '',
+    'secret': process.env.AUTH_SECRET,
     'strategies': [
-      'jwt'
+      'jwt',
+      'local'
     ],
     'path': '/authentication',
     'service': 'users',
@@ -27,24 +28,8 @@ module.exports = {
     },
     'local': {
       'entity': 'user',
-      'service': 'users',
-      'usernameField': 'username',
-      'passwordField': 'password',
-      'session': 'true'
-    },
-    'google': {
-      'clientID': '',
-      'clientSecret': '',
-      'successRedirect': '/',
-      'scope': [
-        'profile openid email'
-      ]
-    },
-    'cookie': {
-      'enabled': true,
-      'name': 'feathers-jwt',
-      'httpOnly': false,
-      'secure': false
+      'usernameField': 'email',
+      'passwordField': 'password'
     }
   }
 };

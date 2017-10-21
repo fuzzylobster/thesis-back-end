@@ -3,6 +3,7 @@ const location = require('./location/location.service.js');
 const users = require('./users/users.service.js');
 const route = require('./route/route.service.js');
 const routeslocs = require('./routeslocs/routeslocs.service.js');
+const photos = require('./photos/photos.service.js');
 module.exports = function () {
   const app = this; // eslint-disable-line no-unused-vars
   app.configure(thesisdb);
@@ -10,4 +11,5 @@ module.exports = function () {
   app.configure(users);
   app.configure(route);
   app.configure(routeslocs);
+  app.configure(photos);
 };

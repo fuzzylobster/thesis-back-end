@@ -23,6 +23,26 @@ const sequelize = require('./sequelize');
 
 const authentication = require('./authentication');
 
+// Image upload additions
+// const serveStatic = require('feathers').static;
+const multer = require('multer');
+const multipartMiddleware = multer();
+const dauria = require('dauria');
+const blobService = require('feathers-blob');
+const fs = require('fs-blob-store');
+
+// Google storage
+const storage = require('@google-cloud/storage');
+
+// const blobStorage = storage({
+//   projectId: '',
+//   keyFileName: ''
+// });
+
+// const blobStorage = fs(__dirname + '/uploads');
+
+
+
 const app = feathers();
 
 // Load app configuration

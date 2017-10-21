@@ -23,6 +23,31 @@ const sequelize = require('./sequelize');
 
 const authentication = require('./authentication');
 
+// Image upload additions
+// const serveStatic = require('feathers').static;
+const Multer = require('multer');
+// const multipartMiddleware = multer();
+// const dauria = require('dauria');
+// const blobService = require('feathers-blob');
+// const fs = require('fs-blob-store');
+const imgUpload = require('../imgUpload');
+
+// Google storage
+// const storage = require('@google-cloud/storage');
+
+// const blobStorage = storage({
+//   projectId: '',
+//   keyFileName: ''
+// });
+
+// const blobStorage = fs(__dirname + '/image-upload');
+
+const multer = Multer(
+  {
+  storage: Multer.memoryStorage()
+  }
+);
+
 const app = feathers();
 
 // Load app configuration
@@ -36,6 +61,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', feathers.static(app.get('public')));
+
+app.post('/image-upload', 
+multer.single('image'), 
+imgUpload.uploadToGcs, 
+function (request, response, next) {
+  console.log('request.file', request.files);
+  // console.log('request', request);
+  const data = request.body;             
+  if (request.file && request.file.cloudStoragePublicUrl) {
+    data.imageUrl = request.file.cloudStoragePublicUrl;
+  }
+  console.log(data);
+  response.send(data);
+})
 
 // Set up Plugins and providers
 app.configure(hooks());

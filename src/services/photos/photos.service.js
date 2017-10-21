@@ -7,9 +7,12 @@ const filters = require('./photos.filters');
 // Image upload requirements
 const multer = require('multer');
 const multipartMiddleware = multer();
+const blobService = require('feathers-blob');
+const fs = require('fs-blob-store');
+const blobStorage = fs(__dirname + '/photos');
 
 // Google storage
-const storage = require('@google-cloud/storage');
+// const storage = require('@google-cloud/storage');
 
 module.exports = function () {
   const app = this;
@@ -23,13 +26,13 @@ module.exports = function () {
   };
 
   // Initialize our service with any options it requires
-  app.use('/photos', multipartMiddleware.single('uri'), (req, res, next) => {
-    req.feathers.file = req.file;
-    next();
-  }, storage({
-    projectId: '',
-    keyFileName: ''
-  }), createService(options));
+  app.use('/photos', 
+  // multipartMiddleware.single('uri'),
+  //  (req, res, next) => {
+  //   req.feathers.file = req.file;
+  //   next();
+  // }, blobService({Model: blobStorage}),
+  createService(options));
 
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('photos');

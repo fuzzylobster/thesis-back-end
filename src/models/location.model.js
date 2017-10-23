@@ -24,7 +24,6 @@ module.exports = function (app) {
   location.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    location.belongsToMany(models.route, { through: models.routeslocs });
   };
 
   return location;

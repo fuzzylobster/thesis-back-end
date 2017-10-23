@@ -6,14 +6,17 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const photos = sequelizeClient.define('photos', {
-    uri: {
+    url: {
       type: DataTypes.STRING
     },
-    name: {
-      type: DataTypes.STRING
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'createdby'
     },
-    type: {
-      type: DataTypes.STRING
+    ispublic: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   }, {
     hooks: {
@@ -26,6 +29,7 @@ module.exports = function (app) {
   photos.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
+    photos.belongsTo(models.users);
   };
 
   return photos;

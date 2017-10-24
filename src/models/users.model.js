@@ -17,6 +17,16 @@ module.exports = function (app) {
   badges: {
     type: DataTypes.ARRAY(DataTypes.TEXT),
     defaultValue: []
+  },
+  advCounter: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  miles: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
     // email: {
     //   type: DataTypes.STRING,

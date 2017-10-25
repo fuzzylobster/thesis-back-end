@@ -132,7 +132,7 @@ module.exports = {
     patch: [
       hook => {
         console.log('A patch request came');
-        // console.log('hook:', hook);
+        console.log('hook:', hook);
       }
     ],
     remove: []

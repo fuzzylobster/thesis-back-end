@@ -27,6 +27,11 @@ module.exports = function (app) {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
+  },
+  cities: {
+    type: DataTypes.ARRAY(DataTypes.TEXT),
+    allowNull: false,
+    defaultValue: []
   }
     // email: {
     //   type: DataTypes.STRING,

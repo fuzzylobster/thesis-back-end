@@ -14,6 +14,11 @@ module.exports = function (app) {
       allowNull: false,
       field: 'createdby'
     },
+    routeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'route'
+    },
     ispublic: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
@@ -30,6 +35,7 @@ module.exports = function (app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     photos.belongsTo(models.users);
+    photos.belongsTo(models.route);
   };
 
   return photos;

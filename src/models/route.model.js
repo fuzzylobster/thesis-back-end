@@ -17,6 +17,11 @@ module.exports = function (app) {
     },
     locs: {
       type: DataTypes.ARRAY(DataTypes.JSON)
+    },
+    cities: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: false,
+      defaultValue: []
     }
   }, {
     hooks: {

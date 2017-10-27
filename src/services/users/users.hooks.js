@@ -123,8 +123,18 @@ module.exports = {
         return verify;
       }
     ],
-    update: [],
-    patch: [],
+    update: [
+      hook => {
+        console.log('A put request came');
+        console.log('hook:', hook);
+      }
+  ],
+    patch: [
+      hook => {
+        console.log('A patch request came');
+        console.log('hook:', hook);
+      }
+    ],
     remove: []
   },
 

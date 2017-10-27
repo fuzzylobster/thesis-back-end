@@ -10,6 +10,23 @@ module.exports = function (app) {
       type: DataTypes.INTEGER,
       allowNull: false,
       field: 'createdby'
+    },
+    name: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    locs: {
+      type: DataTypes.ARRAY(DataTypes.JSON)
+    },
+    cities: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: false,
+      defaultValue: []
+    },
+    photoURL: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: ''
     }
   }, {
     hooks: {
@@ -23,7 +40,6 @@ module.exports = function (app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     route.belongsTo(models.users);
-    route.belongsToMany(models.location, {through: models.routeslocs});
   };
 
   return route;

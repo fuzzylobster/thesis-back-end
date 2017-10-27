@@ -22,6 +22,11 @@ module.exports = function (app) {
       type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
       defaultValue: []
+    },
+    photoURL: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: ''
     }
   }, {
     hooks: {

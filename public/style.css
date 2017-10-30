@@ -1,0 +1,19 @@
+body {
+  font-family: 'Chivo';
+  background: #ffe984;
+  background: linear-gradient(#ffe984, #d75757);
+  background-attachment: fixed;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 60%;
+}
+
+.logoImg {
+  width: 100%;
+}

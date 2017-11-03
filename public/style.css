@@ -1,5 +1,6 @@
 body {
   font-family: 'Chivo';
+  color: #FFFFFF;
   background: #ffe984;
   background: linear-gradient(#ffe984, #d75757);
   background-attachment: fixed;
@@ -14,6 +15,49 @@ body {
   width: 60%;
 }
 
-.logoImg {
+.logo {
+  margin-bottom: 35px;
+}
+
+.resizeImg {
   width: 100%;
+}
+
+.feature {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+h2 {
+  text-shadow: 2px 2px #74b0b0;
+}
+
+.bigfeature {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bigImg {
+  margin-bottom: 20px;
+}
+
+.fcol {
+  width: 50%;
+}
+
+.rText {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.lText {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.fImg {
+  width: 65%;
+  margin-left: 35%;
 }

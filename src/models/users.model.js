@@ -24,7 +24,7 @@ module.exports = function (app) {
     defaultValue: 0
   },
   miles: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DECIMAL,
     allowNull: false,
     defaultValue: 0
   },

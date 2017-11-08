@@ -7,13 +7,17 @@ body {
 }
 
 .container {
+  width: 60%;
+}
+
+/* .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
   width: 60%;
-}
+} */
 
 .logo {
   margin-bottom: 35px;
@@ -24,14 +28,15 @@ body {
 }
 
 .feature {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   margin-bottom: 10px;
-  align-items: center;
+  /* align-items: center; */
 }
 
 h2 {
   text-shadow: 2px 2px #74b0b0;
+  font-weight: bold;
 }
 
 .bigfeature {

@@ -8,6 +8,7 @@ body {
 
 .container {
   width: 60%;
+  margin-bottom: 15px;
 }
 
 @media screen and (max-width: 992px) {
@@ -16,6 +17,15 @@ body {
   }
   .logo {
     width: 100%;
+  }
+  .ruleImg {
+  width: 30%;
+  }
+  .rule {
+  padding-top: 20px;
+  }
+  .smallpic {
+    text-align: center;
   }
 }
 
@@ -26,10 +36,21 @@ body {
   .logo {
     width: 80%;
   }
+  .ruleImg {
+  width: 20%;
+  }
+  .rule {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  }
+  .fImg {
+   margin-left: 35%;
+  }
 }
 
 .logo-row {
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .logo {
@@ -49,19 +70,20 @@ body {
   width: 80%;
 }
 
+.rule {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
 .feature {
   font-size: 16px;
-  margin-bottom: 10px;
 }
 
 h2 {
   text-shadow: 2px 2px #74b0b0;
   font-weight: bold;
 }
-
-
-
-
 
 .fcol {
   width: 50%;
@@ -79,5 +101,4 @@ h2 {
 
 .fImg {
   width: 65%;
-  margin-left: 35%;
 }

@@ -35,11 +35,14 @@ body {
   .container {
     width: 60%;
   }
+  .feat-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+  }
   .feature {
     text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
   }
   .logo {
     width: 65%;
@@ -50,9 +53,6 @@ body {
   .rule {
   padding-top: 30px;
   padding-bottom: 30px;
-  }
-  .fImg {
-   margin-left: 35%;
   }
 }
 
